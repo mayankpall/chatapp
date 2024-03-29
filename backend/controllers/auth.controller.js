@@ -1,3 +1,4 @@
+import  bcrypt  from "bcryptjs";
 import User from "../models/user.model.js";
 
 export const signup = async (req ,res)=>{
@@ -14,15 +15,18 @@ export const signup = async (req ,res)=>{
     }
 
   //hash password here 
-  
+  const salt = await bcrypt.genSalt(10); //higher the value higher the hashing but take more time to hash
+  const hashedPassword = await bcrypt.hash(password,salt);
+
+  //api for profile pic
   const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
   const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
   //Creating a new user object
   const newUser = new User ({
-    fullName,
+    fullName,  //no need to write like fullName:fullName if have same name
     username,
-    password,
+    password:hashedPassword,
     gender,
     profilePic: gender === "male" ? boyProfilePic : girlProfilePic
   });
