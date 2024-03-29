@@ -60,10 +60,48 @@ export const signup = async (req ,res)=>{
 
 };
 
-export const login = (req ,res)=>{
-  console.log("login page");
+
+export const login = async (req ,res)=>{
+  try{
+    const {username, password } =req.body;
+    const user = await User.findOne({username});
+    const isPasswordCorrect = await bcrypt.compare(password, user?.password  || "");
+
+    if(!user || !isPasswordCorrect){
+      return res.status(400).json({error: "Invaild Username or Password"});
+    }
+
+    generateTokenAndSetCookie(user._id,res);
+
+    //sending back to client
+    res.status(200).json({
+      _id: user._id,
+      fullName : user.fullName,
+      username : user.username,
+      profilePic:user.profilePic
+  
+    });
+
+  }
+  catch(error){
+    console.log("Error in login controller ", error.message);
+    res.status(500).json({error: "Internal server Error"});
+  }
 };
-export const logout = (req ,res)=>{
-  console.log("logout page");
+
+
+export const logout = async (req ,res)=>{
+  
+  try{
+     // Clear the JWT cookie by setting its value to an empty string and maxAge to 0
+    res.cookie("jwt","",{maxAge:0});
+    res.status(200).json({message:"logout successfully"});
+
+  } 
+  catch(error){
+    console.log("Error in logout controller ", error.message);
+    res.status(500).json({error: "Internal server Error"});
+  }
+
 };
 
