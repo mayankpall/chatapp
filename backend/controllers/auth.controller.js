@@ -18,6 +18,7 @@ export const signup = async (req ,res)=>{
   const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
   const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
+  //Creating a new user object
   const newUser = new User ({
     fullName,
     username,
@@ -26,8 +27,9 @@ export const signup = async (req ,res)=>{
     profilePic: gender === "male" ? boyProfilePic : girlProfilePic
   });
 
-  await newUser.save();
+  await newUser.save(); //Saving the new user to the database
 
+  //Sending a response back to the client:
   res.status(201).json({
     _id: newUser._id,
     fullName : newUser.fullName,
