@@ -4,6 +4,7 @@ const app = express();
 import authRoutes from "./routes/auth.routes.js";
  
 import dotenv from "dotenv";
+import connectToMongoDB from "./db/connecttoMogodb.js";
 dotenv.config();
 
 const PORT= process.env.PORT || 2000; //.env is environmental varable take value from env or value
@@ -15,6 +16,7 @@ app.get('/', (req,res)=>{
 
 app.use("/api/auth", authRoutes); // whenever page goes to something like /api/auth then authRouters will be called 
 
-app.listen(PORT, ()=>
+app.listen(PORT, ()=>{
+  connectToMongoDB();
   console.log(`hi working correctly ${PORT}`)
-);
+});
