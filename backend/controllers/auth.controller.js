@@ -65,6 +65,8 @@ export const login = async (req ,res)=>{
   try{
     const {username, password } =req.body;
     const user = await User.findOne({username});
+
+     // it Compares the plaintext password provided by the user with the hashed password stored in the database and || "" part provides an empty string as a fallback value if not provided "" then throws error
     const isPasswordCorrect = await bcrypt.compare(password, user?.password  || "");
 
     if(!user || !isPasswordCorrect){

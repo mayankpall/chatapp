@@ -25,7 +25,8 @@ const userSchema = new mongoose.Schema({
     type:String,
     default:""
   }
-});
+} , {timestamps:true}//to use createdAt, updatedAt  => can use as member since <createdAt>
+  );
 
 
 const User = mongoose.model("User",userSchema); //creates a Mongoose model named "User" based on the userSchema defined earlier.
