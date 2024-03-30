@@ -1,8 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/auth.routes.js";
 import connectToMongoDB from "./db/connecttoMogodb.js";
+import messageRoutes from "./routes/message.routes.js"
 
 dotenv.config(); //it should be called before process.env.PORT or other
 
@@ -13,7 +15,11 @@ const PORT= process.env.PORT || 2000 ; //.env is environmental varable take valu
 
 //middlewares 
 app.use(express.json()); //to parse the incoming request with json payload(from req.body)
+app.use(cookieParser()); //to get cookies in routes
+
+
 app.use("/api/auth", authRoutes); // whenever page goes to something like /api/auth then authRouters will be called 
+app.use("/api/messages",messageRoutes);
 
 
 // app.get('/', (req,res)=>{
