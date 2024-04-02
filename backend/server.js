@@ -6,10 +6,11 @@ import authRoutes from "./routes/auth.routes.js";
 import connectToMongoDB from "./db/connecttoMogodb.js";
 import messageRoutes from "./routes/message.routes.js"
 import userRoutes from "./routes/user.routes.js"
+import { app, server } from "./socket/socket.js";
 
 dotenv.config(); //it should be called before process.env.PORT or other
 
-const app = express();
+
 const PORT= process.env.PORT || 2000 ; //.env is environmental varable take value from env or value
 
 //middlewares 
@@ -25,7 +26,7 @@ app.use("/api/users",userRoutes);
 //   res.send("hii");
 // })
 
-app.listen(PORT, ()=>{
+server.listen(PORT, ()=>{
   connectToMongoDB();
   console.log(`hi working correctly ${PORT}`)
 });
