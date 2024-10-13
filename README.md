@@ -1,4 +1,4 @@
-# Real-Time Chat App
+# ChatNest 
 
 This is a real-time chat application built with the MERN stack, using **Socket.io** for real-time communication and **TailwindCSS** + **Daisy UI** for a responsive, modern user interface. The app is ideal for dynamic teams where members can be added or removed frequently, such as in temporary project environments.
 
